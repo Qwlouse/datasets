@@ -384,8 +384,8 @@ class BeamWriter(object):
 
   def _write_final_shard(self, shardid_examples):
     shard_path, examples_by_bucket = shardid_examples
-    examples = list(itertools.chain(*[
-        ex[1] for ex in sorted(examples_by_bucket)]))
+    examples = itertools.chain(*(
+        ex[1] for ex in sorted(examples_by_bucket, key=lambda x: x[0])))
     _write_examples(shard_path, examples, self._file_format)
 
   def write_from_pcollection(self, examples_pcollection):
